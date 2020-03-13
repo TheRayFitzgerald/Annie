@@ -6,6 +6,8 @@ import datetime as dt
 #import config
 import json
 
+corpus = dict()
+
 with open('config.json') as json_data_file:
     data = json.load(json_data_file)['details']
 
@@ -23,26 +25,20 @@ topics_dict = { "title":[], \
                 "body":[]}
 
 subreddit = reddit.subreddit('anxiety')
-top_subreddit = subreddit.top(limit=3)
+top_subreddit = subreddit.top(limit=1500)
 
 for submission in top_subreddit:
-    print(submission.title)
+    #print(submission.title)
+    corpus[submission.title]=''
     submission.comment_sort = 'best'
     # Limit to, at most, 5 top level comments
     submission.comment_limit = 1
     for top_level_comment in submission.comments:
         if isinstance(top_level_comment, MoreComments):
             continue
-        print("### " + top_level_comment.body)
+        corpus[submission.title]=top_level_comment.body
+        #print("### " + top_level_comment.body)
 
-for submission in top_subreddit:
-    topics_dict["title"].append(submission.title)
-    topics_dict["score"].append(submission.score)
-    topics_dict["id"].append(submission.id)
-    topics_dict["url"].append(submission.url)
-    topics_dict["comms_num"].append(submission.num_comments)
-    topics_dict["created"].append(submission.created)
-    topics_dict["body"].append(submission.selftext)
-    print(submission.selftext)
+with open('corpus.txt', 'w') as outfile:
+    json.dump(corpus, outfile)
 
-topics_data = pd.DataFrame(topics_dict)
