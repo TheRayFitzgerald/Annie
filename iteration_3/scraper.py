@@ -5,6 +5,7 @@ import pandas as pd
 import datetime as dt
 #import config
 import json
+import csv
 
 corpus = dict()
 
@@ -24,21 +25,22 @@ topics_dict = { "title":[], \
                 "created": [], \
                 "body":[]}
 
+data_dict = { "context":[], \
+                "text response":[]}
+
 subreddit = reddit.subreddit('anxiety')
-top_subreddit = subreddit.top(limit=1500)
+top_subreddit = subreddit.top(limit=1000)
 
-for submission in top_subreddit:
-    #print(submission.title)
-    corpus[submission.title]=''
-    submission.comment_sort = 'best'
-    # Limit to, at most, 5 top level comments
-    submission.comment_limit = 1
-    for top_level_comment in submission.comments:
-        if isinstance(top_level_comment, MoreComments):
-            continue
-        corpus[submission.title]=top_level_comment.body
-        #print("### " + top_level_comment.body)
+with open('corpus.csv', mode='w') as csv_file:
+    fieldnames=['context', 'text response']
+    writer = csv.DictWriter(csv_file, fieldnames=fieldnames)
+    writer.writeheader()
+    for submission in top_subreddit:
+        submission.comment_sort = 'best'
+        submission.comment_limit = 1
+        for top_level_comment in submission.comments:
+            if isinstance(top_level_comment, MoreComments):
+                continue
+            writer.writerow({'context': submission.title, 'text response': top_level_comment.body})
 
-with open('corpus.txt', 'w') as outfile:
-    json.dump(corpus, outfile)
 
