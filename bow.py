@@ -1,7 +1,7 @@
 import pandas as pd
 from sklearn.feature_extraction.text import CountVectorizer
 from nltk.corpus import stopwords # for stop words
-from data import text_normalization
+from data_clean import text_normalization
 #Return Bag Of Words(BOW) implemtation for Lemmatized Context(lemmatized_text)
 def context_bow(df):
     cv = CountVectorizer()
