@@ -6,9 +6,6 @@ import nltk
 from nltk import wordnet
 from nltk import pos_tag
 
-df=pd.read_csv('corpus.csv')
-df.head
-
 def text_normalization(text):
     text=str(text).lower()
     spl_char_text=re.sub(r'[^ a-z]', '', text)
@@ -30,4 +27,4 @@ def text_normalization(text):
 
     return " ".join(lema_words)
 
-df['lemmatized_text']=df['context'].apply(text_normalization)
+

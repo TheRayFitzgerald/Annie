@@ -28,10 +28,10 @@ topics_dict = { "title":[], \
 data_dict = { "context":[], \
                 "text response":[]}
 
-subreddit = reddit.subreddit('anxiety')
+subreddit = reddit.subreddit('depression')
 top_subreddit = subreddit.top(limit=1000)
 
-with open('corpus.csv', mode='w') as csv_file:
+with open('corpus_depression.csv', mode='w') as csv_file:
     fieldnames=['context', 'text response']
     writer = csv.DictWriter(csv_file, fieldnames=fieldnames)
     writer.writeheader()
