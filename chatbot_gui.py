@@ -20,9 +20,12 @@ pd.options.display.max_seq_items = 2000
 
 
 def main():
-    df=pd.read_csv('./corpora/conglomerate.csv')
-    df['lemmatized_text']=df['context'].apply(data_clean.text_normalization)
+    print('reading pickle')
+    df = pd.read_pickle('./pickled_df/main_df.pkl')
+    print('read pickle')
+    print('getting df_bow')
     df_bow, cv=bow.context_bow(df)
+    print('done df_bow')
 
     ######
     def send():
@@ -33,15 +36,26 @@ def main():
             ChatLog.config(state=NORMAL)
             ChatLog.insert(END, "You: " + msg + '\n\n')
             ChatLog.config(foreground="#442265", font=("Verdana", 12 ))
+            print('doing question bow')
             question_bow=bow.user_question_bow(msg, cv)
+            print('done question bow')
             # create new column for cosine similarity
+            print('doing cosine')
             df['similarity_bow']=cosine_similarity(df_bow, question_bow)
+            print('done cosine')
 
             # taking similarity value of responses for the reddit context questions
+            print('doing df simi')
             df_simi = pd.DataFrame(df, columns=['text response','similarity_bow'])
+            print('done df simi')
+
             # sort the values to get answer to *most similar question*
+            print('doing df simi_sort')
             df_simi_sort = df_simi.sort_values(by='similarity_bow', ascending=False)
+            print('done df simi_sort')
+            print('doing text response')
             res = df_simi_sort.iloc[0]['text response']
+            print('done text response')
             ChatLog.insert(END, "Bot: " + res + '\n\n')
 
             ChatLog.config(state=DISABLED)
