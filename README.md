@@ -1,3 +1,4 @@
+
 # Annie, the Anxiety Bot.
 
 **DISCLAIMER: this is a purely educational project. This product is not intended to act any form of counsel. It is based off unqualified data and is purely experimental. If you are feeling anxious or depressed, please seek professional help. See [https://www.everydayhealth.com/depression/guide/resources/](https://www.everydayhealth.com/depression/guide/resources/) for a list of resources available.**
@@ -12,4 +13,14 @@ Using PRAW(Python Reddit API Wrapper) I extracted the top 1000 posts from subred
 This data is then stored in a Pandas dataframe. The data is normalised and lemmatised. A new column is created in the dataframe for a bag-of-words  representation of the post tile that describes the occurrence of words within the title.
 When the user asks a question, the question goes through the same data processing as above and is the BOW of this question is then checked, using **cosine similarity**, to see what is the post similar post title to the user question. The corresponding top comment is then delivered as a response by Annie.
 
-<img src="https://github.com/TheRayFitzgerald/chatbot/blob/master/screenshots/Screenshot%202020-03-30%20at%2018.15.59.png" alt="alt text" width="55%" height="55%">
+<img src="https://github.com/TheRayFitzgerald/chatbot/blob/master/screenshots/Screenshot%202020-03-30%20at%2018.15.59.png" alt="alt text" width="55%" height="55%"> edfnjdf
+
+## Usage
+Clone this repository and use the command:
+
+    $ python3 chatbot.py
+This will boot the simple TkInter interface.
+You can now interact with Annie! Try to have fun 😊.
+
+
+**Note:** you can make your own corpus using the reddit scraper(reddit_scraper/scraper.py). This way you can select your own subreddits and the number of comments you want to use.
