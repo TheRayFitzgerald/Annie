@@ -6,7 +6,7 @@
 
 ## The Idea
 Annie is a chatbot built using the Natural Language Toolkit([Python NLTK](https://www.nltk.org/)).
-The idea behind Annie is to see if I could train an issue-specific chatbot based off reddit data relevant to that data. I wanted to see if it is possible to create a chatbot that delivers appropriate responses to questions concerning topics of anxiety, depression, stress etc.
+The idea behind Annie is to see if I could train an issue-specific chatbot based off reddit data. I wanted to see if it is possible to create a chatbot that delivers appropriate responses to questions concerning topics of anxiety, depression, stress etc.
 
 ## The Execution
 Using PRAW(Python Reddit API Wrapper) I extracted the top 1000 posts from subreddits such as r/depression, r/anxiety, r/stress, r/CasualConversation etc. I then took the the **post title as the question** and the **top comment as the most effective reply**. This way we have 1000's of questions and answers(most of the time) that reddit-users consider to be the most noteworthy. This is the corpus with which I trained the chatbot. Sometimes, this is extremely effective, as is displayed in the screenshots below. But sometimes the responses to the user-defined questions are just completely non-sensical. This is almost always due to the fact that the top comment sometimes pertains to the post's subtext, not the title.
