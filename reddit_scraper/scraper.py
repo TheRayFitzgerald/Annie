@@ -3,11 +3,12 @@ import praw
 from praw.models import MoreComments
 import pandas as pd
 import datetime as dt
-#import config
 import json
 import csv
 
 corpus = dict()
+output_file= 'conglomerate.csv'
+posts_limit= 1000
 
 with open('../config/config.json') as json_data_file:
     data = json.load(json_data_file)['details']
@@ -31,9 +32,9 @@ data_dict = { "context":[], \
 subreddit_list = [reddit.subreddit('depression'), reddit.subreddit('anxiety'), reddit.subreddit('stress'), reddit.subreddit('CasualConversation'), reddit.subreddit('AnxietyDepression')]
 top_subreddit_list=[]
 for i in subreddit_list:
-    top_subreddit_list.append(i.top(limit=1000))
+    top_subreddit_list.append(i.top(limit=posts_limit))
 
-with open('../corpora/conglomerate.csv', mode='w') as csv_file:
+with open('../corpora/%s' % output_file, mode='w') as csv_file:
     fieldnames=['context', 'text response']
     writer = csv.DictWriter(csv_file, fieldnames=fieldnames)
     writer.writeheader()

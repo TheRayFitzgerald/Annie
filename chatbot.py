@@ -14,9 +14,11 @@ from nltk import word_tokenize # to create tokens
 from nltk.corpus import stopwords # for stop words
 import bow
 from cosine_similarity import cosine_similarity
-import chatbot
+
 
 pickle_name='top_posts.pkl'
+
+
 
 def main():
     print('reading pickle')
@@ -24,7 +26,7 @@ def main():
     print('read pickle')
     print('getting df_bow')
     df_bow, cv=bow.context_bow(df)
-    print('done df_bow')
+    print('done df_bow\nWaiting on a question')
 
     ######
     def send():
@@ -56,34 +58,32 @@ def main():
             res = df_simi_sort.iloc[0]['text response']
             print('done text response')
             print(df_simi_sort.iloc[0]['context'])
-            ChatLog.insert(END, "Bot: " + res + '\n\n')
+            ChatLog.insert(END, "Annie: " + res + '\n\n')
 
             ChatLog.config(state=DISABLED)
             ChatLog.yview(END)
 
 
     base = Tk()
-    base.title("Hello")
+    base.title("Annie, the Anxiety Bot.")
     base.geometry("400x500")
     base.resizable(width=FALSE, height=FALSE)
 
     #Create Chat window
     ChatLog = Text(base, bd=0, bg="white", height="8", width="50", font="Arial",)
 
-    ChatLog.config(state=DISABLED)
 
     #Bind scrollbar to Chat window
     scrollbar = Scrollbar(base, command=ChatLog.yview, cursor="heart")
     ChatLog['yscrollcommand'] = scrollbar.set
 
-    #Create Button to send message
-    SendButton = Button(base, font=("Verdana",12,'bold'), text="Send", width="12", height=5,
-                        bd=0, bg="#32de97", activebackground="#3c9d9b",fg='#ffffff',
-                        command= send )
-
     #Create the box to enter message
     EntryBox = Text(base, bd=0, bg="white",width="29", height="5", font="Arial")
-    #EntryBox.bind("<Return>", send)
+    EntryBox.bind("<Return>", send)
+
+    #Create Button to send message
+    SendButton = Button(base, bg='red', font=("Verdana",12,'bold'), text="Send", width="12", height=5,
+                        bd=0, fg='black', command= send )
 
 
     #Place all components on the screen
@@ -91,6 +91,9 @@ def main():
     ChatLog.place(x=6,y=6, height=386, width=370)
     EntryBox.place(x=128, y=401, height=90, width=265)
     SendButton.place(x=6, y=401, height=90)
+    ChatLog.insert(END, "Annie: Welcome. My name is Annie, the Anxiety Bot. Just say whatever comes to mind." + '\n\n')
+
+    ChatLog.config(state=DISABLED)
     base.mainloop()
     #####
 
