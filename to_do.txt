@@ -1,8 +1,0 @@
-Short:
-read all reddit comments into DataFrame
-find way to find parent comments in comment tree for discussion
-sanitise data
-
-Long:
-GUI
-README
