@@ -28,7 +28,9 @@ for i in list(string.ascii_lowercase):
         suffix_list.append('%s%s' % (i, t))
 
 print(suffix_list)
+
 """
+
 
 suffix_list = []
 for i in range(10):
