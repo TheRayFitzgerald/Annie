@@ -14,14 +14,13 @@ from nltk import word_tokenize # to create tokens
 from nltk.corpus import stopwords # for stop words
 import bow
 from cosine_similarity import cosine_similarity
-import chatbot_gui
-pd.options.display.max_rows = 4000
-pd.options.display.max_seq_items = 2000
+import chatbot
 
+pickle_name='top_posts.pkl'
 
 def main():
     print('reading pickle')
-    df = pd.read_pickle('./pickled_df/main_df.pkl')
+    df = pd.read_pickle('./pickled_df/%s' % pickle_name)
     print('read pickle')
     print('getting df_bow')
     df_bow, cv=bow.context_bow(df)
@@ -46,7 +45,7 @@ def main():
 
             # taking similarity value of responses for the reddit context questions
             print('doing df simi')
-            df_simi = pd.DataFrame(df, columns=['text response','similarity_bow'])
+            df_simi = pd.DataFrame(df, columns=['context', 'text response','similarity_bow'])
             print('done df simi')
 
             # sort the values to get answer to *most similar question*
@@ -56,6 +55,7 @@ def main():
             print('doing text response')
             res = df_simi_sort.iloc[0]['text response']
             print('done text response')
+            print(df_simi_sort.iloc[0]['context'])
             ChatLog.insert(END, "Bot: " + res + '\n\n')
 
             ChatLog.config(state=DISABLED)
@@ -94,7 +94,7 @@ def main():
     base.mainloop()
     #####
 
-    message = chatbot_gui.send()
+    message = chatbot.send()
     while question != 'exit':
         question_bow=bow.user_question_bow(QUESTION, cv)
         # create new column for cosine similarity
@@ -104,7 +104,7 @@ def main():
         df_simi = pd.DataFrame(df, columns=['text response','similarity_bow'])
         # sort the values to get answer to *most similar question*
         df_simi_sort = df_simi.sort_values(by='similarity_bow', ascending=False)
-        chatbot_gui.recieve(df_simi_sort.iloc[0]['text response'])
+        chatbot.recieve(df_simi_sort.iloc[0]['text response'])
 
 if __name__ == '__main__':
     main()
