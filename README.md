@@ -1,6 +1,6 @@
 
 # Annie, the Anxiety Bot.
-
+A NLP Chatbot trained using a corpus of Reddit data.
 **DISCLAIMER: this is a purely educational project. This product is not intended to act any form of counsel. It is based off unqualified data and is purely experimental. If you are feeling anxious or depressed, please seek professional help. See [https://www.everydayhealth.com/depression/guide/resources/](https://www.everydayhealth.com/depression/guide/resources/) for a list of resources available.**
 
 
